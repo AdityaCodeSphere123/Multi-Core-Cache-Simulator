@@ -509,8 +509,6 @@ The following experiments analyze cache behavior under various configurations us
 
 ### 8.2 Effect of Set Index Bits (Cache Size)
 
-![Set Index Bits Analysis](interesting_traces/plots/set_index_bits.png)
-
 **Configuration:** Varying s (2-8), E=4, b=5
 
 | Set Bits (s) | Number of Sets | Cache Size | Expected Behavior |
@@ -522,13 +520,7 @@ The following experiments analyze cache behavior under various configurations us
 
 **Observation:** Increasing set index bits exponentially increases cache capacity, significantly reducing miss rates. Each additional bit doubles the number of sets, effectively doubling cache size while maintaining the same associativity.
 
-![Set Index Bits Analysis 2](interesting_traces/plots/set_index_bits2.png)
-
-![Set Index Constant E](interesting_traces/plots/set_index_bits_const_e_4096.png)
-
 ### 8.3 Effect of Associativity
-
-![Associativity Analysis](interesting_traces/plots/associativity.png)
 
 **Configuration:** s=6, Varying E (1-8), b=5
 
@@ -541,13 +533,7 @@ The following experiments analyze cache behavior under various configurations us
 
 **Observation:** Higher associativity reduces conflict misses by providing more placement options for each memory block. However, benefits diminish beyond 4-way associativity while hardware complexity increases.
 
-![Associativity Analysis 2](interesting_traces/plots/associativity2.png)
-
-![Associativity Constant](interesting_traces/plots/associativity_const_e_4096.png)
-
 ### 8.4 Effect of Block Size
-
-![Block Size Analysis](interesting_traces/plots/block_bits.png)
 
 **Configuration:** s=6, E=4, Varying b (3-7)
 
@@ -561,15 +547,7 @@ The following experiments analyze cache behavior under various configurations us
 
 **Observation:** Larger blocks exploit spatial locality by fetching adjacent data that may be accessed soon. However, excessively large blocks increase miss penalty and may cause cache pollution if spatial locality is low.
 
-![Block Size Analysis 2](interesting_traces/plots/block_bits2.png)
-
-![Block Bits Constant](interesting_traces/plots/block_bits_const_4096.png)
-
 ### 8.5 Overall Cache Size Impact
-
-![Cache Size Analysis](interesting_traces/plots/cache_size.png)
-
-![Cache Size Analysis 2](interesting_traces/plots/cache_size2.png)
 
 **Observation:** Total cache size has the most significant impact on miss rate. Doubling cache size typically yields 30-50% reduction in cache misses, though benefits plateau as working set fits entirely in cache.
 
