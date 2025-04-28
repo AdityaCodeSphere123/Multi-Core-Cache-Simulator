@@ -57,9 +57,9 @@ The simulator models a symmetric multiprocessor (SMP) system with the following 
 ```
 ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
 │   Core 0    │  │   Core 1    │  │   Core 2    │  │   Core 3    │
-│  ┌───────┐  │  │  ┌───────┐  │  │  ┌───────┐  │  │  ┌───────┐  │
-│  │L1 Cache│  │  │  │L1 Cache│  │  │  │L1 Cache│  │  │  │L1 Cache│  │
-│  └───┬───┘  │  │  └───┬───┘  │  │  └───┬───┘  │  │  └───┬───┘  │
+│  ┌────────┐ │  │  ┌────────┐ │  │  ┌────────┐ │  │  ┌────────┐ │
+│  │L1 Cache│ │  │  │L1 Cache│ │  │  │L1 Cache│ │  │  │L1 Cache│ │
+│  └───┬────┘ │  │  └───┬────┘ │  │  └───┬────┘ │  │  └───┬────┘ │
 └──────┼──────┘  └──────┼──────┘  └──────┼──────┘  └──────┼──────┘
        │                │                │                │
        └────────────────┴────────────────┴────────────────┘
@@ -687,8 +687,200 @@ Potential improvements for the simulator:
 
 ---
 
+## 12. Output Format
+
+The simulator generates a comprehensive, well-formatted report with the following sections:
+
+### 12.1 Report Structure
+
+| Section | Description |
+|---------|-------------|
+| **Simulation Parameters** | Cache configuration (s, E, b), sizes, policies |
+| **Per-Core Statistics** | Detailed metrics for each of the 4 cores |
+| **Aggregate Statistics** | Combined totals across all cores |
+| **Bus & Coherence Summary** | Bus transactions and coherence traffic |
+| **Timing Summary** | Total simulation cycles and execution time |
+
+### 12.2 Per-Core Metrics
+
+Each core's statistics include:
+- **Memory Access Summary:** Instructions, reads, writes with percentages
+- **Cache Performance:** Hits, misses, hit rate, miss rate
+- **Cache Events:** Evictions, writebacks, bus invalidations
+- **Timing & Traffic:** Execution cycles, idle cycles, IPC, data traffic
+
+### 12.3 Sample Output (app1 Trace)
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║           MULTICORE CACHE SIMULATOR - SIMULATION REPORT          ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────┐
+│                     SIMULATION PARAMETERS                        │
+├──────────────────────────────────────────────────────────────────┤
+│  Set Index Bits (s):               6                            │
+│  Associativity (E):                4                            │
+│  Block Bits (b):                   5                            │
+│  Block Size:                   32 bytes                        │
+│  Number of Sets:                  64                            │
+│  Cache Size (per core):      8.00 KB                          │
+│  Total Cache Size:          32.00 KB                          │
+├──────────────────────────────────────────────────────────────────┤
+│  Coherence Protocol:        MESI (Illinois)                      │
+│  Write Policy:              Write-back, Write-allocate           │
+│  Replacement Policy:        LRU (Least Recently Used)            │
+│  Bus Architecture:          Central Snooping Bus                 │
+│  Number of Cores:           4                                    │
+└──────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────┐
+│                     PER-CORE STATISTICS                          │
+└──────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────── CORE 0 ───────────────────────────────────┐
+│  Memory Access Summary:                                          │
+│    Total Instructions:           2497349                      │
+│    Total Reads:                  1489888 (59.66%)               │
+│    Total Writes:                 1007461 (40.34%)               │
+│                                                                  │
+│  Cache Performance:                                              │
+│    Cache Hits:                   2474590                      │
+│    Cache Misses:                   22759                      │
+│    Hit Rate:                   99.08867%                      │
+│    Miss Rate:                   0.91133%                      │
+│                                                                  │
+│  Cache Events:                                                   │
+│    Evictions:                      22436                      │
+│    Writebacks:                      2369                      │
+│    Bus Invalidations:                 74                      │
+│                                                                  │
+│  Timing & Traffic:                                               │
+│    Execution Cycles:             4839097                      │
+│    Idle/Stall Cycles:             796712                      │
+│    IPC (approx):                  0.5161                      │
+│    Data Traffic:               984704 bytes                 │
+└──────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────── CORE 1 ───────────────────────────────────┐
+│  Memory Access Summary:                                          │
+│    Total Instructions:           2490468                      │
+│    Total Reads:                  1485857 (59.66%)               │
+│    Total Writes:                 1004611 (40.34%)               │
+│                                                                  │
+│  Cache Performance:                                              │
+│    Cache Hits:                   2468363                      │
+│    Cache Misses:                   22105                      │
+│    Hit Rate:                   99.11242%                      │
+│    Miss Rate:                   0.88758%                      │
+│                                                                  │
+│  Cache Events:                                                   │
+│    Evictions:                      21773                      │
+│    Writebacks:                      1933                      │
+│    Bus Invalidations:                 51                      │
+│                                                                  │
+│  Timing & Traffic:                                               │
+│    Execution Cycles:             4724547                      │
+│    Idle/Stall Cycles:            2034744                      │
+│    IPC (approx):                  0.5271                      │
+│    Data Traffic:               836192 bytes                 │
+└──────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────── CORE 2 ───────────────────────────────────┐
+│  Memory Access Summary:                                          │
+│    Total Instructions:           2509057                      │
+│    Total Reads:                  1492629 (59.49%)               │
+│    Total Writes:                 1016428 (40.51%)               │
+│                                                                  │
+│  Cache Performance:                                              │
+│    Cache Hits:                   2482013                      │
+│    Cache Misses:                   27044                      │
+│    Hit Rate:                   98.92214%                      │
+│    Miss Rate:                   1.07786%                      │
+│                                                                  │
+│  Cache Events:                                                   │
+│    Evictions:                      26656                      │
+│    Writebacks:                      5331                      │
+│    Bus Invalidations:                216                      │
+│                                                                  │
+│  Timing & Traffic:                                               │
+│    Execution Cycles:             5546396                      │
+│    Idle/Stall Cycles:            4504035                      │
+│    IPC (approx):                  0.4524                      │
+│    Data Traffic:              1048544 bytes                 │
+└──────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────── CORE 3 ───────────────────────────────────┐
+│  Memory Access Summary:                                          │
+│    Total Instructions:           2503127                      │
+│    Total Reads:                  1493736 (59.67%)               │
+│    Total Writes:                 1009391 (40.33%)               │
+│                                                                  │
+│  Cache Performance:                                              │
+│    Cache Hits:                   2480614                      │
+│    Cache Misses:                   22513                      │
+│    Hit Rate:                   99.10060%                      │
+│    Miss Rate:                   0.89940%                      │
+│                                                                  │
+│  Cache Events:                                                   │
+│    Evictions:                      22157                      │
+│    Writebacks:                      2077                      │
+│    Bus Invalidations:                 39                      │
+│                                                                  │
+│  Timing & Traffic:                                               │
+│    Execution Cycles:             4784383                      │
+│    Idle/Stall Cycles:            6569408                      │
+│    IPC (approx):                  0.5232                      │
+│    Data Traffic:               805408 bytes                 │
+└──────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────┐
+│                     AGGREGATE STATISTICS                         │
+├──────────────────────────────────────────────────────────────────┤
+│  Total Instructions (all cores):          10000001            │
+│  Total Memory Accesses:                   10000001            │
+│  Total Reads:                              5962110            │
+│  Total Writes:                             4037891            │
+│  Total Cache Hits:                         9905580            │
+│  Total Cache Misses:                         94421            │
+│  Overall Hit Rate:                       99.05579%            │
+│  Overall Miss Rate:                       0.94421%            │
+│  Total Evictions:                            93022            │
+│  Total Writebacks:                           11710            │
+│  Total Invalidations:                          380            │
+└──────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────┐
+│                     BUS & COHERENCE SUMMARY                      │
+├──────────────────────────────────────────────────────────────────┤
+│  Total Bus Transactions:                     94583            │
+│  Total Bus Traffic:                     3401376 bytes         │
+│  Total Core Data Traffic:               3674848 bytes         │
+│  Bus Transactions per Instruction:        0.009458            │
+└──────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────┐
+│                     TIMING SUMMARY                               │
+├──────────────────────────────────────────────────────────────────┤
+│  Total Simulation Cycles:                 11361454            │
+│  Maximum Execution Time:                  11361455            │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+### 12.4 Key Observations from app1 Trace
+
+| Metric | Value | Interpretation |
+|--------|-------|----------------|
+| Overall Hit Rate | 99.06% | Excellent cache utilization |
+| Overall Miss Rate | 0.94% | Very low miss rate |
+| Total Instructions | 10M | ~2.5M per core (balanced workload) |
+| Bus Transactions | 94,583 | ~0.95% of accesses require bus |
+| Read/Write Ratio | 60/40 | Read-dominant workload |
+
+---
 
 **Author:** Aditya Anand  
-**Course:** Computer Architecture  
-**Institution:** Indian Institute of Technology Delhi
+**Course:** COL216 - Computer Architecture  
+**Institution:** Indian Institute of Technology Delhi  
+**Date:** April 2025
 
