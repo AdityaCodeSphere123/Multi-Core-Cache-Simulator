@@ -1,9 +1,9 @@
-# COL216 Assignment 3: Multicore Cache Simulator with MESI Protocol
+# Multicore Cache Simulator with MESI Protocol
 
 **Author:** Aditya Anand  
-**Course:** COL216 - Computer Architecture  
+**Course:** Computer Architecture  
 **Semester:** 2024-25  
-**Date:** December 2024
+**Date:** April 2025
 
 ---
 
