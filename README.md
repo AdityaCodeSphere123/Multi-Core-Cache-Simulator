@@ -176,38 +176,38 @@ The MESI protocol defines four states for each cache line:
                     │                                      │
                     ▼                                      │
               ┌─────────┐                                  │
-     ┌───────►│ INVALID │◄────────────────────┐           │
-     │        └────┬────┘                     │           │
-     │             │                          │           │
-     │    PrRd     │    PrWr                  │           │
-     │   (BusRd)   │   (BusRdX)               │           │
-     │             │                          │           │
-     │             ▼                          │           │
-     │   ┌─────────────────────┐              │           │
-     │   │                     │              │           │
-     │   ▼                     ▼              │           │
-┌────┴───────┐           ┌───────────┐        │           │
-│  EXCLUSIVE │           │ MODIFIED  │        │           │
-│    (E)     │           │    (M)    │────────┤           │
-└─────┬──────┘           └─────┬─────┘        │           │
+     ┌───────►│ INVALID │◄────────────────────┐            │
+     │        └────┬────┘                     │            │
+     │             │                          │            │
+     │    PrRd     │    PrWr                  │            │
+     │   (BusRd)   │   (BusRdX)               │            │
+     │             │                          │            │
+     │             ▼                          │            │
+     │   ┌─────────────────────┐              │            │
+     │   │                     │              │            │
+     │   ▼                     ▼              │            │
+┌────┴───────┐           ┌───────────┐        │            │
+│  EXCLUSIVE │           │ MODIFIED  │        │            │
+│    (E)     │           │    (M)    │────────┤            │
+└─────┬──────┘           └─────┬─────┘        │            │
       │                        │         BusRdX│           │
       │ PrWr                   │         (Flush)           │
-      │ (silent)               │              │           │
-      │                        │              │           │
-      └────────►┌──────────────┘              │           │
-                │                             │           │
-           BusRd│                             │           │
-          (Share)                             │           │
-                │                             │           │
-                ▼                             │           │
-          ┌───────────┐                       │           │
-          │  SHARED   │───────────────────────┘           │
-          │    (S)    │                                   │
-          └─────┬─────┘                                   │
-                │                                         │
-                │ BusRdX / BusUpgr                        │
-                │ (Invalidate)                            │
-                └─────────────────────────────────────────┘
+      │ (silent)               │              │            │
+      │                        │              │            │
+      └────────►┌──────────────┘              │            │
+                │                             │            │
+           BusRd│                             │            │
+          (Share)                             │            │
+                │                             │            │
+                ▼                             │            │
+          ┌───────────┐                       │            │
+          │  SHARED   │───────────────────────┘            │
+          │    (S)    │                                    │
+          └─────┬─────┘                                    │
+                │                                          │
+                │ BusRdX / BusUpgr                         │
+                │ (Invalidate)                             │
+                └──────────────────────────────────────────┘
 ```
 
 ### 4.3 Bus Transactions
@@ -689,7 +689,6 @@ Potential improvements for the simulator:
 
 
 **Author:** Aditya Anand  
-**Course:** COL216 - Computer Architecture  
-**Institution:** Indian Institute of Technology Delhi  
-**Date:** December 2024
+**Course:** Computer Architecture  
+**Institution:** Indian Institute of Technology Delhi
 
